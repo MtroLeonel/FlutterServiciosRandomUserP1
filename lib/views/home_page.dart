@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'calculator_page.dart';
+import 'nominas_page.dart';
 import 'users_page.dart';
 
 /// Página principal con menú de navegación
@@ -16,10 +17,10 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 1.0,
+          crossAxisCount: 3,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 1.55,
           children: [
             _buildMenuCard(
               context,
@@ -49,6 +50,19 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
+            _buildMenuCard(
+              context,
+              icon: Icons.payments,
+              title: 'Nominas',
+              subtitle: 'Sistema de nominas',
+              color: Colors.orange,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NominasPage()),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -65,29 +79,31 @@ class HomePage extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 64, color: color),
-              const SizedBox(height: 12),
+              Icon(icon, size: 24, color: color),
+              const SizedBox(height: 6),
               Text(
                 title,
                 style: Theme.of(
                   context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 subtitle,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(fontSize: 10),
                 textAlign: TextAlign.center,
               ),
             ],
