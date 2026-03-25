@@ -25,7 +25,6 @@ class _NominasPageState extends State<NominasPage> {
   List<BitacoraEntry> _bitacora = const [];
   ApiMessageResponse? _health;
 
-  final _emailController = TextEditingController(text: 'admin@sigch.local');
   final _passwordController = TextEditingController(text: '123456');
 
   final _eNombre = TextEditingController();
@@ -62,7 +61,6 @@ class _NominasPageState extends State<NominasPage> {
 
   @override
   void dispose() {
-    _emailController.dispose();
     _passwordController.dispose();
 
     _eNombre.dispose();
@@ -168,7 +166,7 @@ class _NominasPageState extends State<NominasPage> {
           break;
       }
     } catch (e) {
-      _message = 'Error: $e';
+      setState(() => _message = 'Error: $e');
     } finally {
       if (mounted) {
         setState(() => _loading = false);
@@ -184,7 +182,6 @@ class _NominasPageState extends State<NominasPage> {
 
     try {
       final auth = await SigchSession.login(
-        email: _emailController.text.trim(),
         password: _passwordController.text,
       );
       if (!mounted) {
@@ -481,8 +478,10 @@ class _NominasPageState extends State<NominasPage> {
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 14),
-            _field('Email', _emailController),
+            _profileLine('Email', SigchSession.email),
+            const SizedBox(height: 10),
             _field('Contraseña', _passwordController, obscure: true),
+            const SizedBox(height: 4),
             Row(
               children: [
                 FilledButton(

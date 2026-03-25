@@ -8,14 +8,17 @@ class SigchSession {
   static final SigchApiService service = SigchApiService();
   static AuthResponse? authResponse;
 
+  static const String email = 'admin@sigch.local';
+  static const String password = '123456';
+
   static bool get isLoggedIn =>
       service.token != null && service.token!.isNotEmpty;
 
-  static Future<AuthResponse> login({
-    required String email,
-    required String password,
-  }) async {
-    final response = await service.login(email: email, password: password);
+  static Future<AuthResponse> login({String? email, String? password}) async {
+    final response = await service.login(
+      email: email ?? SigchSession.email,
+      password: password ?? SigchSession.password,
+    );
     authResponse = response;
     return response;
   }
